@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { endpoints } from '../utils/apis';
-const CREATE_USER_API = endpoints;
+const {CREATE_USER_API }= endpoints;
 
 const UserAdd = ({ onCancel }) => {
   const [formData, setFormData] = useState({

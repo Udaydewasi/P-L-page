@@ -56,7 +56,6 @@ export function PnLView({ user, selectedBroker, setSelectedBroker }) {
   const fetchAllTradeHistory = async () => {
     try {
       const URL = `${ALL_TRADE_HISTORY_API}${user.gmail}`;
-      console.log("URL is:", URL);
       const response = await fetch(URL);
 
       if (!response.ok) {
@@ -82,7 +81,6 @@ export function PnLView({ user, selectedBroker, setSelectedBroker }) {
         data: allTradeHistory,
         isAggregated: true  // Add this flag to identify aggregated data
       };
-      console.log("data", allTradeHistory);
       setSelectedBroker([aggregatedData]);
     } else {
       setError("No trade history data found.");

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchUserByEmail } from "../utils/mongoApi";
+import { fetchUserByEmail } from "../utils/fetchdetails";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ function LoginForm() {
     const { email, password, role } = formData;
 
     const user = await fetchUserByEmail(formData);
-    
+    console.log(user);
     if (!user) {
       alert("User not found!");
       return;

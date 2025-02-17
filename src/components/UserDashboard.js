@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchUserByEmail } from "../utils/mongoApi";
+import { fetchUserByEmail } from "../utils/fetchdetails";
 
 function UserDashboard() {
   const [userData, setUserData] = useState(null);

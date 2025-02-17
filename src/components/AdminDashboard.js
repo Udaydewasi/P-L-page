@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchAllUsers } from "../utils/mongoApi";
+import { fetchAllUsers } from "../utils/fetchdetails";
 import AddBrokerForm from "../pages/AddBrokerForm";
 import UserAdd from "../pages/Useradd";
 import {PnLView} from "../pages/P&Lshow"

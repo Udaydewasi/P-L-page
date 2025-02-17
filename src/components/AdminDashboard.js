@@ -4,6 +4,8 @@ import AddBrokerForm from "../pages/AddBrokerForm";
 import UserAdd from "../pages/Useradd";
 import {PnLView} from "../pages/P&Lshow"
 import { BrokerView } from "../pages/BrokerView";
+import { endpoints } from "../utils/apis";
+const {BROKER_DATA_API} = endpoints;
 
 function AdminDashboard() {
   const [users, setUsers] = useState([]);
@@ -29,7 +31,7 @@ function AdminDashboard() {
     if (selectedUser) {
       const fetchBrokerData = async () => {
         try {
-          const URL = `https://p-l-page.onrender.com/get_trade_history?gmail=${selectedUser.gmail}`;
+          const URL = `${BROKER_DATA_API}${selectedUser.gmail}`;
           
           const response = await fetch(
             URL

@@ -15,14 +15,14 @@ function LoginForm() {
     const { email, password, role } = formData;
 
     const user = await fetchUserByEmail(formData);
-    console.log(user);
+    console.log("user is : ", user);
     if (!user || user == ' Gmail is incorrect' || user == 'Password is incorrect.') {
       alert("Invalid email or password!");
       return;
     }
 
     
-    localStorage.setItem("user_id", user.email);
+    localStorage.setItem("email", user);
     localStorage.setItem("role", role);
     
     if (role === "admin") {

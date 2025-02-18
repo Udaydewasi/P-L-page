@@ -3,7 +3,7 @@ import { fetchAllUsers } from "../utils/fetchdetails";
 import AddBrokerForm from "../pages/AddBrokerForm";
 import UserAdd from "../pages/Useradd";
 import {PnLView} from "../pages/P&Lshow"
-import { BrokerView } from "../pages/BrokerView";
+import { BrokerView } from "../pages/BrokerViewAdmin";
 import { endpoints } from "../utils/apis";
 const {BROKER_DATA_API} = endpoints;
 
@@ -181,7 +181,7 @@ function AdminDashboard() {
           {/* Profit & Loss View */}
           {view === "pnl" && (
             <PnLView
-              user={selectedUser}
+              user={selectedUser.gmail}
               selectedBroker={selectedBroker}
               setSelectedBroker={setSelectedBroker}
             />

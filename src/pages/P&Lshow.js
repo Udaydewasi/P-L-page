@@ -10,7 +10,7 @@ export function PnLView({ user, selectedBroker, setSelectedBroker }) {
     if (user) {
       const fetchBrokerData = async () => {
         try {
-          const URL = `https://p-l-page.onrender.com/get_trade_history?gmail=${user.gmail}`;
+          const URL = `http://localhost:5000/get_trade_history?gmail=${user}`;
           const response = await fetch(URL);
 
           if (!response.ok) {
@@ -55,7 +55,7 @@ export function PnLView({ user, selectedBroker, setSelectedBroker }) {
 
   const fetchAllTradeHistory = async () => {
     try {
-      const URL = `${ALL_TRADE_HISTORY_API}${user.gmail}`;
+      const URL = `${ALL_TRADE_HISTORY_API}${user}`;
       const response = await fetch(URL);
 
       if (!response.ok) {

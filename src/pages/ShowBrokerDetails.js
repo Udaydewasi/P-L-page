@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
-import { handleEditBrokerSubmit } from '../pages/editBroker';
+import { handleEditBrokerSubmit } from './edit&deleteBroker';
 
 export function BrokerDetailsModal({ brokerDetails, onClose, broker, gmail, onUpdate }) {
   const [isEditing, setIsEditing] = useState(false);

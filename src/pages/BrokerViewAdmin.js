@@ -4,17 +4,15 @@ import React, { useState } from "react";
 import { GiMailShirt } from "react-icons/gi";
 import {getBrokerDetails} from "../utils/fetchdetails"
 import {BrokerDetailsModal} from "../pages/ShowBrokerDetails"
+import { deleteBroker } from "./edit&deleteBroker";
 
 export function BrokerView({
   user,
   brokerData,
-  setIsAddingBroker,
-  setSelectedBroker,
   showAddBrokerOptions,
   setShowAddBrokerOptions,
   handleAddBroker,
-  onEditBroker,
-  onDeleteBroker,
+  onDeleteBroker
 }) {
   const brokers = ["upstox", "zerodha", "angle_one", "grow"];
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -39,7 +37,7 @@ export function BrokerView({
   const confirmDeleteBroker = async () => {
     if (confirmDelete && brokerToDelete) {
       try {
-        await onDeleteBroker(brokerToDelete);
+        await deleteBroker(user.gmail, brokerToDelete);
         setShowDeleteModal(false);
         setConfirmDelete(false);
       } catch (error) {

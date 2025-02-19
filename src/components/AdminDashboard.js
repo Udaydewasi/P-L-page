@@ -173,8 +173,6 @@ function AdminDashboard() {
             showAddBrokerOptions={showAddBrokerOptions}
             setShowAddBrokerOptions={setShowAddBrokerOptions}
             handleAddBroker={handleAddBroker}
-            // onEditBroker={handleEditBroker} // Pass the function here
-            // onDeleteBroker={handleDeleteBroker}
           />
           )}
 

@@ -24,7 +24,7 @@ const EditDeleteComponent = () => {
   const handleDelete = async (id) => {
     try {
       await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-        method: "DELETE",
+        method: "POST",
       });
       setData(data.filter((item) => item.id !== id)); // Remove deleted item from state
       alert("Item deleted successfully!");

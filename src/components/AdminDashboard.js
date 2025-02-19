@@ -5,7 +5,7 @@ import UserAdd from "../pages/Useradd";
 import {PnLView} from "../pages/P&Lshow"
 import { BrokerView } from "../pages/BrokerViewAdmin";
 import { endpoints } from "../utils/apis";
-const {BROKER_DATA_API} = endpoints;
+const {BROKER_DATA_API, BROKER_DETAIL_API} = endpoints;
 
 function AdminDashboard() {
   const [users, setUsers] = useState([]);
@@ -82,21 +82,21 @@ function AdminDashboard() {
   };
 
 
-  const handleEditBroker = (broker) => {
-    // Implement your edit API call here
-    console.log("Editing broker:", broker);
-  };
+  // const handleEditBroker = (broker) => {
+  //   // Implement your edit API call here
+  //   console.log("Editing broker:", broker);
+  // };
   
-  const handleDeleteBroker = async (broker) => {
-    try {
-      // Implement your delete API call here
-      console.log("Deleting broker:", broker);
-      // await deleteBrokerAPI(user.id, broker);
-      refreshUsers();
-    } catch (error) {
-      console.error("Error deleting broker:", error);
-    }
-  };
+  // const handleDeleteBroker = async (broker) => {
+  //   try {
+  //     // Implement your delete API call here
+  //     console.log("Deleting broker:", broker);
+  //     // await deleteBrokerAPI(user.id, broker);
+  //     refreshUsers();
+  //   } catch (error) {
+  //     console.error("Error deleting broker:", error);
+  //   }
+  // };
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold bg-blue-500 p-2 rounded-lg flex items-center text-white">
@@ -173,8 +173,8 @@ function AdminDashboard() {
             showAddBrokerOptions={showAddBrokerOptions}
             setShowAddBrokerOptions={setShowAddBrokerOptions}
             handleAddBroker={handleAddBroker}
-            onEditBroker={handleEditBroker} // Pass the function here
-            onDeleteBroker={handleDeleteBroker}
+            // onEditBroker={handleEditBroker} // Pass the function here
+            // onDeleteBroker={handleDeleteBroker}
           />
           )}
 

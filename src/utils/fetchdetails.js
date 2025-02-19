@@ -1,5 +1,5 @@
 import { endpoints } from "./apis";
-const { USER_DETAIL_API, CREDENTIAL_API } = endpoints;
+const { USER_DETAIL_API, CREDENTIAL_API, BROKER_DETAIL_API, EDIT_BROKER_API } = endpoints;
 
 // Fetch user by email
 export async function fetchUserByEmail(formData) {
@@ -18,11 +18,10 @@ export async function fetchUserByEmail(formData) {
       throw new Error(`Failed to fetch user details, status: ${response.status}`);
     }
 
-    // Ensure you wait for the response to resolve and parse JSON
     const user = await response.json();
-    console.log("User fetched:", user);
+    if(role === 'user') return user.user ?? null;
 
-    return user.user ?? null; // Return user data or null if undefined
+    return user ?? null;
   } catch (error) {
     console.error("Error fetching user:", error);
     return null;
@@ -38,28 +37,50 @@ export async function fetchAllUsers() {
     if (!response.ok) {
       throw new Error("Failed to fetch all users");
     }
-
     const users = await response.json();
-
-    return users ?? []; // Ensures an empty array is returned if users is `undefined` or `null`
+    
+    return users ?? [];
   } catch (error) {
     console.error("Error fetching all users:", error);
     return [];
   }
 }
 
-export async function fetchUserDetails(email){
-  try{
-      const response = await fetch();
-      if(!response.ok){
-        throw new Error("Failed to fetch User's Details");
-      }
+export async function getBrokerDetails(gmail, broker) { 
+  try {
+    const url = `${BROKER_DETAIL_API}?gmail=${gmail}&broker=${broker}`;
 
-      const user = await response.json();
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-      return user ?? [];
-  }catch(e){
-    console.error("Error fetching user details", e);
-    return [];
+    if (!response.ok) {
+      throw new Error(`Failed to fetch broker details: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+
+  } catch (error) {
+    console.error("Error fetching broker details:", error);
+    return null; 
+  }
+}
+
+export async function updateBrokerDetails(gmail, broker, updatedFields) {
+  try {
+    const response = await fetch(EDIT_BROKER_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ gmail, broker, ...updatedFields }),
+    });
+    if (!response.ok) throw new Error("Failed to update broker details");
+    return await response.json();
+  } catch (error) {
+    console.error("Error updating broker details:", error);
+    throw error;
   }
 }

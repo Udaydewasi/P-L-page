@@ -16,7 +16,7 @@ function LoginForm() {
 
     const user = await fetchUserByEmail(formData);
     console.log("user is : ", user);
-    if (!user || user == ' Gmail is incorrect' || user == 'Password is incorrect.') {
+    if (user == null  || user == ' Gmail is incorrect' || user == 'Password is incorrect.') {
       alert("Invalid email or password!");
       return;
     }

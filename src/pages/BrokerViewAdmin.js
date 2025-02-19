@@ -1,6 +1,9 @@
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import React, { useState } from "react";
+import { GiMailShirt } from "react-icons/gi";
+import {getBrokerDetails} from "../utils/fetchdetails"
+import {BrokerDetailsModal} from "../pages/ShowBrokerDetails"
 
 export function BrokerView({
   user,
@@ -10,13 +13,15 @@ export function BrokerView({
   showAddBrokerOptions,
   setShowAddBrokerOptions,
   handleAddBroker,
-  onEditBroker, // Ensure this prop is passed
+  onEditBroker,
   onDeleteBroker,
 }) {
   const brokers = ["upstox", "zerodha", "angle_one", "grow"];
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [brokerToDelete, setBrokerToDelete] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [selectedBroker, setBroker] = useState(null);
+
 
   const connectedBrokers = brokerData
     ? brokers.filter((broker) => brokerData[broker] && brokerData[broker].length > 0)
@@ -25,16 +30,6 @@ export function BrokerView({
   const availableBrokers = brokerData
     ? brokers.filter((broker) => !brokerData[broker] || brokerData[broker].length === 0)
     : brokers;
-
-  const handleEditClick = (broker) => {
-    if (typeof onEditBroker === "function") {
-      onEditBroker(broker); // Call the onEditBroker function
-      setIsAddingBroker(true);
-      setSelectedBroker(broker);
-    } else {
-      console.error("onEditBroker is not a function");
-    }
-  };
 
   const handleDeleteClick = (broker) => {
     setBrokerToDelete(broker);
@@ -53,35 +48,46 @@ export function BrokerView({
     }
   };
 
+const [showDetailsModal, setShowDetailsModal] = useState(false);
+const [selectedBrokerDetails, setSelectedBrokerDetails] = useState(null);
+
+const handleAddDetail = async (broker) => {
+  try {
+    setBroker(broker);
+    const details = await getBrokerDetails(user.gmail, broker);
+    setSelectedBrokerDetails(details);
+    setShowDetailsModal(true);
+  } catch (error) {
+    console.error("Error fetching broker details:", error);
+  }
+};
+  
+
   return (
     <div className="mt-4">
       <h3 className="text-lg font-semibold">Connected Brokers:</h3>
       <div className="grid grid-cols-2 gap-2 mt-2">
         {connectedBrokers.length > 0 ? (
           connectedBrokers.map((broker) => (
-            <div
-              key={broker}
-              className="border p-3 rounded-lg flex justify-between items-center"
-            >
-              <span className="font-bold">
-                {broker.charAt(0).toUpperCase() + broker.slice(1)}
-              </span>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleEditClick(broker)}
-                  className="text-blue-500 hover:text-blue-700"
-                  title="Edit"
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  onClick={() => handleDeleteClick(broker)}
-                  className="text-red-500 hover:text-red-700"
-                  title="Delete"
-                >
-                  <MdDelete />
-                </button>
+            <div className="border rounded-lg flex justify-between items-center">
+              <div
+                key={broker}
+                className="w-11/12 rounded-lg p-2 cursor-pointer hover:bg-gray-400"
+                onClick={()=> handleAddDetail(broker)}
+              >
+                <span className="font-bold">
+                  {broker.charAt(0).toUpperCase() + broker.slice(1)}
+                  {/* onClick={() => handleBrokerDetails(gmail)} */}
+                </span>
+          
               </div>
+                  <button
+                    onClick={() => handleDeleteClick(broker)}
+                    className="text-red-700 hover:bg-red-700 border rounded-lg bg-red-300 p-2"
+                    title="Delete"
+                  >
+                    <MdDelete />
+                  </button>
             </div>
           ))
         ) : (
@@ -166,6 +172,16 @@ export function BrokerView({
             ))}
           </div>
         </div>
+      )}
+
+      {showDetailsModal && selectedBrokerDetails && (
+        <BrokerDetailsModal
+          brokerDetails={selectedBrokerDetails}
+          onClose={() => setShowDetailsModal(false)}
+          broker={selectedBroker}
+          gmail={user.gmail}
+          onUpdate={() => handleAddDetail(selectedBrokerDetails.broker)}
+        />
       )}
     </div>
   );

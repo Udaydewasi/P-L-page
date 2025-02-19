@@ -7,5 +7,8 @@ export const endpoints = {
     BROKER_FORM_DETAIL_API: BASE_URL + "/get_broker_form",
     BROKER_DATA_API: BASE_URL + "/get_trade_history?gmail=",
     CREDENTIAL_API: BASE_URL + "/checkUserCredential",
-    ALL_TRADE_HISTORY_API: BASE_URL + "/get_all_trade_history?gmail="
+    ALL_TRADE_HISTORY_API: BASE_URL + "/get_all_trade_history?gmail=",
+    DELETE_BROKER_API: BASE_URL + "/deleteBroker",
+    EDIT_BROKER_API: BASE_URL + "/editBroker",
+    BROKER_DETAIL_API: BASE_URL + "/get_broker_details"
 }

@@ -11,7 +11,6 @@ export function PnLView({ user, selectedBroker, setSelectedBroker }) {
       const fetchBrokerData = async () => {
         try {
           const URL = `${BROKER_DATA_API}${user}`;
-          console.log("URL IS : ", URL)
           const response = await fetch(URL);
 
           if (!response.ok) {

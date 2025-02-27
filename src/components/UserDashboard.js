@@ -22,7 +22,6 @@ function UserDashboard() {
         throw new Error("Failed to fetch broker data");
       }
       const data = await response.json();
-      console.log("brokerData", data);
       setBrokerData(data);
       }catch(e){
 

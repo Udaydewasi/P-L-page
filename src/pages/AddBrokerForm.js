@@ -17,7 +17,6 @@ const AddBrokerForm = ({ setIsAddingBroker, selectedBroker, refreshUsers, user, 
           throw new Error("Failed to fetch form fields");
         }
         const data = await response.json();
-        console.log("API Response:", data);
  
         // Extract fields for the selected broker
         if (data[selectedBroker]) {

@@ -81,22 +81,6 @@ function AdminDashboard() {
     setShowAddBrokerOptions(false); // Hide the add broker options after selection
   };
 
-
-  // const handleEditBroker = (broker) => {
-  //   // Implement your edit API call here
-  //   console.log("Editing broker:", broker);
-  // };
-  
-  // const handleDeleteBroker = async (broker) => {
-  //   try {
-  //     // Implement your delete API call here
-  //     console.log("Deleting broker:", broker);
-  //     // await deleteBrokerAPI(user.id, broker);
-  //     refreshUsers();
-  //   } catch (error) {
-  //     console.error("Error deleting broker:", error);
-  //   }
-  // };
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold bg-blue-500 p-2 rounded-lg flex items-center text-white">

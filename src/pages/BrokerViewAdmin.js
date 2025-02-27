@@ -18,7 +18,6 @@ export function BrokerView({
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [selectedBroker, setBroker] = useState(null);
 
-  console.log(brokerData)
   const connectedBrokers = brokerData
     ? brokers.filter((broker) => brokerData[broker] && brokerData[broker].length > 0)
     : [];

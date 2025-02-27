@@ -1,7 +1,7 @@
 import React from "react";
 
 export function BrokerView({ user, brokerData, setSelectedBroker }) {
-  const brokers = ["upstox", "zerodha", "angle_one", "grow"];
+  const brokers = ["upstox"];
 
   const connectedBrokers = brokerData
     ? brokers.filter((broker) => brokerData[broker] && brokerData[broker].length > 0)

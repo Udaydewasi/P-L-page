@@ -35,7 +35,7 @@ export function PnLView({ user, selectedBroker, setSelectedBroker }) {
   const tradeSummaries = [];
 
   if (brokerData) {
-    ["upstox", "zerodha", "angle_one", "grow"].forEach((broker) => {
+    ["upstox"].forEach((broker) => {
       const trades = brokerData[broker];
       if (Array.isArray(trades)) {
         trades.forEach((b, index) => {

@@ -12,7 +12,7 @@ export function BrokerView({
   handleAddBroker,
   onDeleteBroker
 }) {
-  const brokers = ["upstox", "zerodha", "angle_one", "grow"];
+  const brokers = ["upstox"];
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [brokerToDelete, setBrokerToDelete] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(false);

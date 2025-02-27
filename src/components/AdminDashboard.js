@@ -5,7 +5,7 @@ import UserAdd from "../pages/Useradd";
 import {PnLView} from "../pages/P&Lshow"
 import { BrokerView } from "../pages/BrokerViewAdmin";
 import { endpoints } from "../utils/apis";
-const {BROKER_DATA_API, BROKER_DETAIL_API} = endpoints;
+const {BROKER_DATA_API} = endpoints;
 
 function AdminDashboard() {
   const [users, setUsers] = useState([]);

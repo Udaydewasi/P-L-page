@@ -78,7 +78,7 @@ export function BrokerDetailsModal({ brokerDetails, onClose, broker, gmail, onUp
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg w-[500px] max-h-[80vh] overflow-y-auto">
+      <div className="w-3/5 bg-white p-6 rounded-lg w-[500px] max-h-[80vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold capitalize">
             {broker} Details

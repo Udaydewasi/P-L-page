@@ -1,7 +1,5 @@
 import { MdDelete } from "react-icons/md";
-import { FaEdit } from "react-icons/fa";
 import React, { useState } from "react";
-import { GiMailShirt } from "react-icons/gi";
 import {getBrokerDetails} from "../utils/fetchdetails"
 import {BrokerDetailsModal} from "../pages/ShowBrokerDetails"
 import { deleteBroker } from "./edit&deleteBroker";
@@ -20,7 +18,7 @@ export function BrokerView({
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [selectedBroker, setBroker] = useState(null);
 
-
+  console.log(brokerData)
   const connectedBrokers = brokerData
     ? brokers.filter((broker) => brokerData[broker] && brokerData[broker].length > 0)
     : [];

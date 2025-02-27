@@ -10,7 +10,8 @@ export function PnLView({ user, selectedBroker, setSelectedBroker }) {
     if (user) {
       const fetchBrokerData = async () => {
         try {
-          const URL = `http://localhost:5000/get_trade_history?gmail=${user}`;
+          const URL = `${BROKER_DATA_API}${user}`;
+          console.log("URL IS : ", URL)
           const response = await fetch(URL);
 
           if (!response.ok) {
@@ -39,7 +40,7 @@ export function PnLView({ user, selectedBroker, setSelectedBroker }) {
       const trades = brokerData[broker];
       if (Array.isArray(trades)) {
         trades.forEach((b, index) => {
-          if (b.trade_summary && Object.keys(b.trade_summary).length > 0) {
+          if (b.trade_summary) {
             tradeSummaries.push({
               index,
               name: `${broker.charAt(0).toUpperCase() + broker.slice(1)}`,
@@ -79,7 +80,7 @@ export function PnLView({ user, selectedBroker, setSelectedBroker }) {
       const aggregatedData = {
         name: "All Brokers",
         data: allTradeHistory,
-        isAggregated: true  // Add this flag to identify aggregated data
+        isAggregated: true
       };
       setSelectedBroker([aggregatedData]);
     } else {

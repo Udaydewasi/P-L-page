@@ -19,7 +19,6 @@ export async function fetchUserByEmail(formData) {
     }
 
     const user = await response.json();
-    if(role === 'user') return user.user ?? null;
 
     return user ?? null;
   } catch (error) {
@@ -46,7 +45,7 @@ export async function fetchAllUsers() {
   }
 }
 
-export async function getBrokerDetails(gmail, broker) { 
+export async function getBrokerDetails(gmail, broker) {
   try {
     const url = `${BROKER_DETAIL_API}?gmail=${gmail}&broker=${broker}`;
 

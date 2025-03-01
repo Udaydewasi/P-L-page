@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { endpoints } from '../utils/apis';
-const {CREATE_USER_API }= endpoints;
+const { CREATE_USER_API } = endpoints;
 
 const UserAdd = ({ onCancel }) => {
   const [formData, setFormData] = useState({
@@ -8,6 +8,7 @@ const UserAdd = ({ onCancel }) => {
     email: '',
     password: '',
     confirmPassword: '',
+    role: 'user', // Default role
   });
 
   const [error, setError] = useState('');
@@ -34,6 +35,7 @@ const UserAdd = ({ onCancel }) => {
       username: formData.name,
       gmail: formData.email,
       password: formData.password,
+      role: formData.role, // Include role in the submitted data
     };
 
     try {
@@ -55,6 +57,7 @@ const UserAdd = ({ onCancel }) => {
         email: '',
         password: '',
         confirmPassword: '',
+        role: 'user', // Reset role to default
       });
       setError('');
       alert('User data submitted successfully!');
@@ -114,6 +117,18 @@ const UserAdd = ({ onCancel }) => {
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Role:</label>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
           <div className="flex gap-4">
             <button

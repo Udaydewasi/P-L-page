@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { fetchUserByEmail } from "../utils/fetchdetails";
 import { endpoints } from "../utils/apis";
 import { PnLView } from "../pages/P&Lshow";
 import { BrokerView } from "../pages/BrokerViewUser";
+import { useNavigate } from "react-router-dom";
 
 const {BROKER_DATA_API} = endpoints;
 
@@ -10,7 +10,10 @@ function UserDashboard() {
   const [brokerData, setBrokerData] = useState(null);
   const [selectedBroker, setSelectedBroker] = useState(null);
   const [view, setView] = useState(null);
-  const user_email = localStorage.getItem("email");
+  const user = localStorage.getItem("user");
+  const parsedUser = JSON.parse(user);
+  const user_email = parsedUser.gmail;
+  const username = parsedUser.username
 
 
   useEffect(() => {
@@ -30,11 +33,25 @@ function UserDashboard() {
     fetchUser();
   }, []);
 
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    localStorage.removeItem('user');
+    navigate('/');
+    window.history.replaceState(null, '', '/');
+  };
+
   return (
     <div className="p-6">
+      <button
+        onClick={logoutHandler}
+        className="bg-yellow-500 font-bold px-4 py-2 rounded-lg flex justify-end ml-auto"
+      >
+        Log Out
+      </button>
+
       {brokerData ? (
         <>
-          <h2 className="text-2xl font-bold">Welcome, {brokerData.username}</h2>
+          <h2 className="text-2xl font-bold">Welcome, {username}</h2>
           {(
                   <div className="mt-6 p-4 border rounded-lg">
                     <div className="flex justify-between items-center">

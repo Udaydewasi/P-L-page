@@ -12,23 +12,30 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password, role } = formData;
+    // const { email, password, role } = formData;
+  
+    try {
+      const result = await fetchUserByEmail(formData);
 
-    const user = await fetchUserByEmail(formData);
+      // if (result?.[0]?.error) {
+      //   throw new Error(result.error || 'Login failed. Please try again.');
+      // }
+  
+      if (result?.[0]?.message === "Login successful" && result?.[0]?.user) {
 
-    if (user == null  || user == ' Gmail is incorrect' || user == 'Password is incorrect.') {
-      alert("Invalid email or password!");
-      return;
-    }
-
-    
-    localStorage.setItem("email", user);
-    localStorage.setItem("role", role);
-    
-    if (role === "admin") {
-      navigate("/admin-dashboard");
-    } else {
-      navigate("/user-dashboard");
+        localStorage.setItem('user', JSON.stringify(result?.[0]?.user));
+  
+        if (result?.[0]?.user?.role === 'admin') {
+          navigate('/admin-dashboard');
+        } else {
+          navigate('/user-dashboard');
+        }
+      } else {
+        throw new Error('Invalid response from server.');
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 

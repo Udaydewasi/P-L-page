@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { endpoints } from '../utils/apis';
 const { CREATE_USER_API } = endpoints;
 
-const UserAdd = ({ onCancel }) => {
+const UserAdd = ({ onCancel, refreshUsers }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -61,6 +61,10 @@ const UserAdd = ({ onCancel }) => {
       });
       setError('');
       alert('User data submitted successfully!');
+      
+      // Refresh the users list to display the newly added user
+      await refreshUsers();
+      
       onCancel(); // Hide the form after successful submission
     } catch (error) {
       setError('Error submitting user data. Please try again.');

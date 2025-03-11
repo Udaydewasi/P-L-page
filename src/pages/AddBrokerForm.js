@@ -3,7 +3,7 @@ import { endpoints } from "../utils/apis";
 
 const { BROKER_FORM_DETAIL_API, BROKER_FORM_SUBMIT_API } = endpoints;
 
-const AddBrokerForm = ({ setIsAddingBroker, selectedBroker, refreshUsers, user, onCancel }) => {
+const AddBrokerForm = ({ setIsAddingBroker, selectedBroker, refreshBrokerData, user, onCancel, refreshCallback}) => {
   const [formFields, setFormFields] = useState([]); // State to store form fields from API
   const [formData, setFormData] = useState({}); // State to store form data
   const [error, setError] = useState(""); // State to handle errors
@@ -72,8 +72,11 @@ const AddBrokerForm = ({ setIsAddingBroker, selectedBroker, refreshUsers, user, 
       // Reset form and show success message
       setFormData({});
       setIsAddingBroker(false); // Close the form after submission
-      await refreshUsers(); // Refresh the user list
       alert("Form submitted successfully!");
+
+      if (typeof refreshBrokerData === 'function') {
+        await refreshBrokerData();
+      }
     } catch (error) {
       setError("Error submitting form data. Please try again.");
       console.error(error);

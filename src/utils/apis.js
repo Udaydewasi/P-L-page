@@ -10,5 +10,7 @@ export const endpoints = {
     ALL_TRADE_HISTORY_API: BASE_URL + "/get_all_trade_history?gmail=",
     DELETE_BROKER_API: BASE_URL + "/deleteBroker",
     EDIT_BROKER_API: BASE_URL + "/editBroker",
-    BROKER_DETAIL_API: BASE_URL + "/get_broker_details"
+    BROKER_DETAIL_API: BASE_URL + "/get_broker_details",
+    BROKER_TEST_API: BASE_URL + "/testbroker",
+    TEST_VISIBLE_API: BASE_URL + "/teststatus"
 }

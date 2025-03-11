@@ -23,7 +23,7 @@ export function BrokerView({ user, brokerData, setSelectedBroker }) {
             </div>
           ))
         ) : (
-          <p>No brokers connected</p> // Added fallback in case no brokers are found
+          <p>No brokers connected</p>
         )}
       </div>
     </div>

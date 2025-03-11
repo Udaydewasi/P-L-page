@@ -1,8 +1,7 @@
-// editBroker.js
 import { endpoints } from "../utils/apis";
 const {EDIT_BROKER_API, DELETE_BROKER_API} = endpoints;
 
-export const handleEditBrokerSubmit = async (gmail, broker, updatedFields) => {
+export const handleEditBrokerSubmit = async (gmail, broker, updatedFields, refreshCallback) => {
     try {
       const response = await fetch(EDIT_BROKER_API, {
         method: "POST",
@@ -15,6 +14,11 @@ export const handleEditBrokerSubmit = async (gmail, broker, updatedFields) => {
       
       alert("Details Updated Successfully.");
       
+      // Call refresh callback if provided
+      if (typeof refreshCallback === 'function') {
+        refreshCallback();
+      }
+      
       return data;
     } catch (error) {
       console.error("Error updating broker details:", error);
@@ -22,7 +26,7 @@ export const handleEditBrokerSubmit = async (gmail, broker, updatedFields) => {
     }
 }
 
-export const deleteBroker = async (gmail, broker) => {
+export const deleteBroker = async (gmail, broker, refreshCallback) => {
   try{
     const response = await fetch(DELETE_BROKER_API, {
       method: "POST",
@@ -34,6 +38,11 @@ export const deleteBroker = async (gmail, broker) => {
     const data = response.json();
     alert("Broker Deleted successfully.");
 
+    // Call refresh callback if provided
+    if (typeof refreshCallback === 'function') {
+      refreshCallback();
+    }
+    
     return data;
   }catch(e){
     console.error("Error deleting broker");

@@ -19,11 +19,14 @@ function AdminDashboard() {
   const [showAddBrokerOptions, setShowAddBrokerOptions] = useState(false);
   const [selectedBrokerForForm, setSelectedBrokerForForm] = useState(null);
   const [brokerData, setBrokerData] = useState(null);
+  
+  // Function to fetch users - extracted for reuse
+  const fetchUsers = async () => {
+    const usersList = await fetchAllUsers();
+    setUsers(usersList);
+  };
+
   useEffect(() => {
-    async function fetchUsers() {
-      const usersList = await fetchAllUsers();
-      setUsers(usersList);
-    }
     fetchUsers();
   }, []);
 
@@ -69,17 +72,36 @@ function AdminDashboard() {
     setHighlightedUser(user._id);
   };
 
-  // Add this function to refresh users
+  // Function to refresh users list - now exported for use in other components
   const refreshUsers = async () => {
-    const usersList = await fetchAllUsers();
-    setUsers(usersList);
+    await fetchUsers();
+  };
+
+  // Function to refresh broker data for the currently selected user
+  const refreshBrokerData = async () => {
+    if (selectedUser) {
+      try {
+        const URL = `${BROKER_DATA_API}${selectedUser.gmail}`;
+        const response = await fetch(URL);
+        
+        if (!response.ok) {
+          throw new Error("Failed to fetch broker data");
+        }
+        
+        const data = await response.json();
+        setBrokerData(data);
+      } catch (error) {
+        console.error("Error refreshing broker data:", error);
+      }
+    }
   };
 
   // Function to handle adding user to a broker
-  const handleAddBroker = (broker) => {
+  const handleAddBroker = async(broker) => {
     setSelectedBrokerForForm(broker); 
     setIsAddingBroker(true); 
     setShowAddBrokerOptions(false);
+    await refreshBrokerData();
   };
 
   const navigate = useNavigate();
@@ -89,6 +111,7 @@ function AdminDashboard() {
     navigate('/');
     window.history.replaceState(null, '', '/');
   };
+  
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold bg-blue-500 p-2 rounded-lg flex items-center text-white">
@@ -109,8 +132,8 @@ function AdminDashboard() {
         </button>
       </div>
 
-      {/* Conditionally render the UserAdd component */}
-      {showUserAdd && <UserAdd onCancel={() => setShowUserAdd(false)} />}
+      {/* Conditionally render the UserAdd component with refreshUsers function */}
+      {showUserAdd && <UserAdd onCancel={() => setShowUserAdd(false)} refreshUsers={refreshUsers} />}
       <p className="mb-4 mt-6 text-lg font-bold bg-blue-200 rounded-lg flex justify-center p-1">List of all registered users:</p>
 
       {/* Users List */}
@@ -163,17 +186,18 @@ function AdminDashboard() {
             </button>
           </div>
 
-          {/* Broker List */}
+          {/* Broker List with refresh function */}
           {view === "broker" && (
             <BrokerView
-            user={selectedUser}
-            brokerData={brokerData}
-            setIsAddingBroker={setIsAddingBroker}
-            setSelectedBroker={setSelectedBroker}
-            showAddBrokerOptions={showAddBrokerOptions}
-            setShowAddBrokerOptions={setShowAddBrokerOptions}
-            handleAddBroker={handleAddBroker}
-          />
+              user={selectedUser}
+              brokerData={brokerData}
+              setIsAddingBroker={setIsAddingBroker}
+              setSelectedBroker={setSelectedBroker}
+              showAddBrokerOptions={showAddBrokerOptions}
+              setShowAddBrokerOptions={setShowAddBrokerOptions}
+              handleAddBroker={handleAddBroker}
+              refreshBrokerData={refreshBrokerData}
+            />
           )}
 
           {/* Profit & Loss View */}
@@ -187,12 +211,13 @@ function AdminDashboard() {
         </div>
       )}
 
-      {/* Add Broker Form */}
+      {/* Add Broker Form with refresh function */}
       {isAddingBroker && (
         <AddBrokerForm
           setIsAddingBroker={setIsAddingBroker}
           selectedBroker={selectedBrokerForForm}
           refreshUsers={refreshUsers}
+          refreshBrokerData={refreshBrokerData}
           user={selectedUser.gmail}
           onCancel={() => {
             setSelectedBrokerForForm(null);

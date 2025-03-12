@@ -89,7 +89,6 @@ export function BrokerView({
   const test_status = async () => {
     const response = await fetch(`${TEST_VISIBLE_API}?gmail=${user.gmail}&broker=${broker}`);
     const data = await response.json();
-    console.log("data is ;", data)
     return data;
   };
 

@@ -177,14 +177,11 @@ function PnLTable({ selectedBroker }) {
           return (
             <div key={month} className="p-4 border rounded-lg bg-gray-100">
               <h4 className="text-xl font-bold mb-2">{month}</h4>
-              <div className="grid grid-cols-7 gap-1">
+              <div className="grid gap-1" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))", display: "grid" }}>
                 {daysInMonth.map((day) => {
                   const totalPl = monthlyPnL[month][day];
                   return (
-                    <div
-                      key={day}
-                      className="p-1 border text-center rounded-lg"
-                    >
+                    <div key={day} className="p-1 border text-center rounded-lg">
                       <p className="font-bold">{day}</p>
                       <p
                         className={`${
